@@ -7,14 +7,7 @@ export default function Login() {
   const navigate = useNavigate();
   return (
     <div className="CommonCentering">
-      <Box
-        className="Box"
-        sx={{
-          width: 300,
-          height: 300,
-          backgroundColor: "transparent",
-        }}
-      >
+      <Box className="Box">
         <div className="Buttons">
           <button
             className="c-button c-button--gooey"

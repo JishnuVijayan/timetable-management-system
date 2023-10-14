@@ -3,13 +3,23 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image: url(../images/Login.jpg);
+    background-image: url(../images/LoginMain.jpg);
+    background-repeat: no-repeat;
+    background-size: cover ;
+    
 }
 .Box{
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  
+  box-shadow: rgba(0, 0, 0, 0.56) 30px 100px 30px;
+  border: 3px rgba(0, 0, 0, 0.56);
+  border-radius: 40px;
+  background-color: rgba(255,255,255,0.7);
+  backgorund-filter: blur(7px);
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 300px;
+    height: 300px;
     
 }   
 .c-button {

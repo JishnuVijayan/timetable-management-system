@@ -1,0 +1,27 @@
+
+
+.Heading{
+    display: flex;
+    flex-direction: rows;
+}
+
+.AdminBox{
+    height: 796px;
+    width: 920px;
+    background-color: rgba(200,200,200,1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.8ms;
+}
+.AdminBox:hover{
+    background-color: rgba(255,255,255,0.7);
+}
+.Adminicon{
+    height: 200px!important;
+    width: 200px!important;
+    color: rgba(15,15,15,0.3);
+}
+.Adminicon:hover{
+    color: rgba(15,15,15,1);
+}

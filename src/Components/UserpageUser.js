@@ -27,15 +27,26 @@ export default function UserpageUser() {
           <TextField
             id="standard-basic"
             variant="standard"
-            style={{ width: 350, paddingBottom: 10 }}
+            style={{ width: 350, paddingBottom: 10, paddingTop: 10 }}
             onChange={(e) => setSemester(e.target.value)}
           />
           <TextField
             id="standard-basic"
             variant="standard"
-            style={{ width: 350, paddingBottom: 10 }}
+            style={{ width: 350, paddingBottom: 20 }}
             onChange={(e) => setFacultyName(e.target.value)}
           />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <button class="button3">
+              <span class="button-content">Find</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

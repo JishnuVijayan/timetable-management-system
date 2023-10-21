@@ -1,8 +1,9 @@
 .Line {
     border-left: 6px solid #06c8d9;
-    height: 831px;
+    height: 829px;
     position: absolute;
     right: 50%;
     top: 130px;
+    border-radius: 40px;
     
 }

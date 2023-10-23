@@ -2,6 +2,7 @@ import React from "react";
 import UserpageUser from "../Components/UserpageUser";
 import { Grid } from "@mui/material";
 import AdminpageAdmin from "../Components/AdminpageAdmin";
+import "../Pages/Admin.css";
 
 export default function Admin() {
   return (
@@ -25,7 +26,7 @@ export default function Admin() {
         <Grid item xs={6}>
           <UserpageUser />
         </Grid>
-        <div className="Line"></div>
+        <div className="Line2"></div>
         <Grid item xs={6}>
           <AdminpageAdmin />
         </Grid>

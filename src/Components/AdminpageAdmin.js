@@ -494,6 +494,157 @@ export default function AdminpageAdmin() {
           </div>
         </div>
       </div>
+      <h3>Subject name and Faculty name: </h3>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          columnGap: 200,
+          justifyContent: "space-evenly",
+        }}
+      >
+        <div style={{ display: "flex", flexDirection: "row", columnGap: 10 }}>
+          <h3>Subject name: </h3>
+          <TextField
+            id="standard-basic"
+            variant="standard"
+            style={{ paddingTop: 8 }}
+          />
+        </div>
+        <div style={{ display: "flex", flexDirection: "row", columnGap: 10 }}>
+          <h3>Faculty name: </h3>
+          <TextField
+            id="standard-basic"
+            variant="standard"
+            style={{ paddingTop: 8 }}
+          />
+        </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          columnGap: 200,
+          justifyContent: "space-evenly",
+        }}
+      >
+        <div style={{ display: "flex", flexDirection: "row", columnGap: 10 }}>
+          <h3>Subject name: </h3>
+          <TextField
+            id="standard-basic"
+            variant="standard"
+            style={{ paddingTop: 8 }}
+          />
+        </div>
+        <div style={{ display: "flex", flexDirection: "row", columnGap: 10 }}>
+          <h3>Faculty name: </h3>
+          <TextField
+            id="standard-basic"
+            variant="standard"
+            style={{ paddingTop: 8 }}
+          />
+        </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          columnGap: 200,
+          justifyContent: "space-evenly",
+        }}
+      >
+        <div style={{ display: "flex", flexDirection: "row", columnGap: 10 }}>
+          <h3>Subject name: </h3>
+          <TextField
+            id="standard-basic"
+            variant="standard"
+            style={{ paddingTop: 8 }}
+          />
+        </div>
+        <div style={{ display: "flex", flexDirection: "row", columnGap: 10 }}>
+          <h3>Faculty name: </h3>
+          <TextField
+            id="standard-basic"
+            variant="standard"
+            style={{ paddingTop: 8 }}
+          />
+        </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          columnGap: 200,
+          justifyContent: "space-evenly",
+        }}
+      >
+        <div style={{ display: "flex", flexDirection: "row", columnGap: 10 }}>
+          <h3>Subject name: </h3>
+          <TextField
+            id="standard-basic"
+            variant="standard"
+            style={{ paddingTop: 8 }}
+          />
+        </div>
+        <div style={{ display: "flex", flexDirection: "row", columnGap: 10 }}>
+          <h3>Faculty name: </h3>
+          <TextField
+            id="standard-basic"
+            variant="standard"
+            style={{ paddingTop: 8 }}
+          />
+        </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          columnGap: 200,
+          justifyContent: "space-evenly",
+        }}
+      >
+        <div style={{ display: "flex", flexDirection: "row", columnGap: 10 }}>
+          <h3>Subject name: </h3>
+          <TextField
+            id="standard-basic"
+            variant="standard"
+            style={{ paddingTop: 8 }}
+          />
+        </div>
+        <div style={{ display: "flex", flexDirection: "row", columnGap: 10 }}>
+          <h3>Faculty name: </h3>
+          <TextField
+            id="standard-basic"
+            variant="standard"
+            style={{ paddingTop: 8 }}
+          />
+        </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          columnGap: 200,
+          justifyContent: "space-evenly",
+        }}
+      >
+        <div style={{ display: "flex", flexDirection: "row", columnGap: 10 }}>
+          <h3>Subject name: </h3>
+          <TextField
+            id="standard-basic"
+            variant="standard"
+            style={{ paddingTop: 8 }}
+          />
+        </div>
+        <div style={{ display: "flex", flexDirection: "row", columnGap: 10 }}>
+          <h3>Faculty name: </h3>
+          <TextField
+            id="standard-basic"
+            variant="standard"
+            style={{ paddingTop: 8 }}
+          />
+        </div>
+      </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <button class="button3">
           <span class="button-content" style={{ fontSize: 19 }}>

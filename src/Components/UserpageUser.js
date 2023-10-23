@@ -44,7 +44,9 @@ export default function UserpageUser() {
             }}
           >
             <button class="button3">
-              <span class="button-content">Find</span>
+              <span class="button-content" style={{ fontSize: 19 }}>
+                Find
+              </span>
             </button>
           </div>
         </div>

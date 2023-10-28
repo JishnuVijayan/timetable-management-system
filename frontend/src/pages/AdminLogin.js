@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
-import "../Pages/AdminLogin.css";
+import "../styles/AdminLogin.css";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -23,7 +23,6 @@ export default function AdminLogin() {
   const navigate = useNavigate();
   const [adminName, setAdminName] = useState("");
   const [adminPassword, setAdminPassword] = useState("");
-
 
   return (
     <div className="Maindiv">

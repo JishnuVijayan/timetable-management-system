@@ -1,6 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import "../Pages/Login.css";
+import "../styles/Login.css";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {

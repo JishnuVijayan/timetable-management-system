@@ -2,7 +2,7 @@ import React from "react";
 import { Box, IconButton } from "@mui/material";
 import LockPersonIcon from "@mui/icons-material/LockPerson";
 import { useNavigate } from "react-router-dom";
-import "./UserpageAdmin.css";
+import "../styles/UserpageAdmin.css";
 
 export default function UserpageAdmin() {
   const navigate = useNavigate();

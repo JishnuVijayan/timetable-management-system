@@ -1,5 +1,5 @@
 import React from "react";
-import "../Components/UserpageUser.css";
+import "../styles/UserpageUser.css";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
 

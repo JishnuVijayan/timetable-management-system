@@ -1,10 +1,10 @@
 import React from "react";
-import UserpageAdmin from "../Components/UserpageAdmin";
-import UserpageUser from "../Components/UserpageUser";
+import UserpageUser from "../components/UserpageUser";
 import { Grid } from "@mui/material";
-import "./Users.css";
+import AdminpageAdmin from "../components/AdminpageAdmin";
+import "../styles/Admin.css";
 
-export default function Users() {
+export default function Admin() {
   return (
     <div>
       <div
@@ -26,9 +26,9 @@ export default function Users() {
         <Grid item xs={6}>
           <UserpageUser />
         </Grid>
-        <div className="Line"></div>
+        <div className="Line2"></div>
         <Grid item xs={6}>
-          <UserpageAdmin />
+          <AdminpageAdmin />
         </Grid>
       </Grid>
     </div>

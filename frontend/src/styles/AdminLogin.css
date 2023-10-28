@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image: url(../images/LoginMain.jpg );
+    background-image: url(../assets/LoginMain.jpg );
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -13,6 +13,7 @@
 .Box2{
     display: flex;
     justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.56) 30px 100px 30px;
     align-items: center;
     width: 300px;
     height: 400px;

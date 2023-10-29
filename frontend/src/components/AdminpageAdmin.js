@@ -1,5 +1,4 @@
 import React from "react";
-
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
 
@@ -7,23 +6,27 @@ export default function AdminpageAdmin() {
   const [inputFormat, setInputFormat] = useState([
     {
       id: 1,
-      day: "monday",
+      title: "For monday",
     },
     {
       id: 2,
-      day: "tuesday",
+      title: "For tuesday",
     },
     {
       id: 3,
-      day: "wednesday",
+      title: "For wednesday",
     },
     {
       id: 4,
-      day: "thursday",
+      title: "For thursday",
     },
     {
       id: 5,
-      day: "friday",
+      title: "For friday",
+    },
+    {
+      id: 6,
+      title: "Time interval for each period",
     },
   ]);
   return (
@@ -46,9 +49,9 @@ export default function AdminpageAdmin() {
             style={{ paddingTop: 8 }}
           />
         </div>
-        {inputFormat.map((day) => (
+        {inputFormat.map((item) => (
           <>
-            <h3>For {day.day}:</h3>
+            <h3>{item.title}:</h3>
             <div
               style={{
                 display: "flex",

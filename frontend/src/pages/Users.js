@@ -23,12 +23,12 @@ export default function Users() {
         </h2>
       </div>
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid
+          item
+          xs={12}
+          style={{ display: "flex", justifyContent: "center" }}
+        >
           <UserpageUser />
-        </Grid>
-        <div className="Line"></div>
-        <Grid item xs={6}>
-          <UserpageAdmin />
         </Grid>
       </Grid>
     </div>

@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
 
 export default function AdminpageAdmin() {
   const [inputFormat, setInputFormat] = useState([
@@ -29,6 +28,82 @@ export default function AdminpageAdmin() {
       title: "Time interval for each period",
     },
   ]);
+
+  const [semester, setSemesterName] = useState("");
+  const [mondaySubject, setMondaySubject] = useState(Array(7).fill(""));
+  const [tuesdaySubject, setTuesdaySubject] = useState(Array(7).fill(""));
+  const [wednesdaySubject, setWednesdaySubject] = useState(Array(7).fill(""));
+  const [thursdaySubject, setThursdaySubject] = useState(Array(7).fill(""));
+  const [fridaySubject, setFridaySubject] = useState(Array(7).fill(""));
+  const [timeInterval, setTimeInterval] = useState(Array(7).fill(""));
+
+  const handleInputChange = (day, index, newValue) => {
+    switch (day) {
+      case "For monday":
+        setMondaySubject((prev) => {
+          const copy = [...prev];
+          copy[index] = newValue;
+          return copy;
+        });
+        break;
+      case "For tuesday":
+        setTuesdaySubject((prev) => {
+          const copy = [...prev];
+          copy[index] = newValue;
+          return copy;
+        });
+        break;
+      case "For wednesday":
+        setWednesdaySubject((prev) => {
+          const copy = [...prev];
+          copy[index] = newValue;
+          return copy;
+        });
+        break;
+      case "For thursday":
+        setThursdaySubject((prev) => {
+          const copy = [...prev];
+          copy[index] = newValue;
+          return copy;
+        });
+        break;
+      case "For friday":
+        setFridaySubject((prev) => {
+          const copy = [...prev];
+          copy[index] = newValue;
+          return copy;
+        });
+        break;
+      case "Time interval for each period":
+        setTimeInterval((prev) => {
+          const copy = [...prev];
+          copy[index] = newValue;
+          return copy;
+        });
+        break;
+      default:
+        break;
+    }
+  };
+  const [subjectNames, setSubjectNames] = useState(
+    Array.from({ length: 6 }, () => "")
+  );
+  const [facultyNames, setFacultyNames] = useState(
+    Array.from({ length: 6 }, () => "")
+  );
+
+  const handleSubjectNameChange = (index, value) => {
+    const newSubjectNames = [...subjectNames];
+    newSubjectNames[index] = value;
+    setSubjectNames(newSubjectNames);
+  };
+
+  const handleFacultyNameChange = (index, value) => {
+    const newFacultyNames = [...facultyNames];
+    newFacultyNames[index] = value;
+    setFacultyNames(newFacultyNames);
+  };
+
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -47,10 +122,12 @@ export default function AdminpageAdmin() {
             id="standard-basic"
             variant="standard"
             style={{ paddingTop: 8 }}
+            value={semester}
+            onChange={(e) => setSemesterName(e.target.value)}
           />
         </div>
-        {inputFormat.map((item) => (
-          <>
+        {inputFormat.map((item, dayIndex) => (
+          <div key={item.id}>
             <h3>{item.title}:</h3>
             <div
               style={{
@@ -58,98 +135,51 @@ export default function AdminpageAdmin() {
                 flexDirection: "row",
                 columnGap: 10,
                 justifyContent: "space-between",
+                paddingLeft: 25,
+                paddingRight: 25,
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  columnGap: 10,
-                }}
-              >
-                <h3>1:</h3>
-                <TextField
-                  id="standard-basic"
-                  variant="standard"
-                  style={{ width: 60, paddingTop: 8 }}
-                />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  columnGap: 10,
-                }}
-              >
-                <h3>2:</h3>
-                <TextField
-                  id="standard-basic"
-                  variant="standard"
-                  style={{ width: 60, paddingTop: 8 }}
-                />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  columnGap: 10,
-                }}
-              >
-                <h3>4:</h3>
-                <TextField
-                  id="standard-basic"
-                  variant="standard"
-                  style={{ width: 60, paddingTop: 8 }}
-                />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  columnGap: 10,
-                }}
-              >
-                <h3>5:</h3>
-                <TextField
-                  id="standard-basic"
-                  variant="standard"
-                  style={{ width: 60, paddingTop: 8 }}
-                />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  columnGap: 10,
-                }}
-              >
-                <h3>6:</h3>
-                <TextField
-                  id="standard-basic"
-                  variant="standard"
-                  style={{ width: 60, paddingTop: 8 }}
-                />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  columnGap: 10,
-                }}
-              >
-                <h3>7:</h3>
-                <TextField
-                  id="standard-basic"
-                  variant="standard"
-                  style={{ width: 60, paddingTop: 8 }}
-                />
-              </div>
+              {Array(7)
+                .fill()
+                .map((_, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      columnGap: 10,
+                    }}
+                  >
+                    <h3>{index + 1}:</h3>
+                    <TextField
+                      id="standard-basic"
+                      variant="standard"
+                      style={{ width: 60, paddingTop: 8 }}
+                      value={
+                        item.title === "For monday"
+                          ? mondaySubject[index]
+                          : item.title === "For tuesday"
+                          ? tuesdaySubject[index]
+                          : item.title === "For wednesday"
+                          ? wednesdaySubject[index]
+                          : item.title === "For thursday"
+                          ? thursdaySubject[index]
+                          : item.title === "For friday"
+                          ? fridaySubject[index]
+                          : timeInterval[index]
+                      }
+                      onChange={(e) =>
+                        handleInputChange(item.title, index, e.target.value)
+                      }
+                    />
+                  </div>
+                ))}
             </div>
-          </>
+          </div>
         ))}
       </div>
       <h3>Subject name and Faculty name: </h3>
-      {Array.from({ length: 6 }, () => (
+      {Array.from({ length: 6 }, (_, subIndex) => (
         <div
           style={{
             display: "flex",
@@ -159,11 +189,15 @@ export default function AdminpageAdmin() {
           }}
         >
           <div style={{ display: "flex", flexDirection: "row", columnGap: 10 }}>
-            <h3>Subject name: </h3>
+            <h3>Subject name {subIndex + 1}: </h3>
             <TextField
               id="standard-basic"
               variant="standard"
               style={{ paddingTop: 8 }}
+              value={subjectNames[subIndex]}
+              onChange={(e) =>
+                handleSubjectNameChange(subIndex, e.target.value)
+              }
             />
           </div>
           <div style={{ display: "flex", flexDirection: "row", columnGap: 10 }}>
@@ -172,13 +206,17 @@ export default function AdminpageAdmin() {
               id="standard-basic"
               variant="standard"
               style={{ paddingTop: 8 }}
+              value={facultyNames[subIndex]}
+              onChange={(e) =>
+                handleFacultyNameChange(subIndex, e.target.value)
+              }
             />
           </div>
         </div>
       ))}
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <button class="button3">
-          <span class="button-content" style={{ fontSize: 19 }}>
+        <button className="button3">
+          <span className="button-content" style={{ fontSize: 19 }}>
             Submit
           </span>
         </button>

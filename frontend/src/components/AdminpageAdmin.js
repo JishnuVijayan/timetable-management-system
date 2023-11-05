@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
+import axios from "axios";
 
 export default function AdminpageAdmin() {
   const [inputFormat, setInputFormat] = useState([
@@ -102,6 +103,28 @@ export default function AdminpageAdmin() {
     const newFacultyNames = [...facultyNames];
     newFacultyNames[index] = value;
     setFacultyNames(newFacultyNames);
+  };
+  const sendDataToServer = async () => {
+    try {
+      const data = [
+        {
+          timeperiod: timeInterval,
+          monday: mondaySubject,
+          tuesday: tuesdaySubject,
+          wednesday: wednesdaySubject,
+          thursday: thursdaySubject,
+          friday: fridaySubject,
+        },
+      ];
+
+      await axios.post("http://localhost:5000/insert-timeperiod", data, {
+        headers: { "Content-Type": "application/json" },
+      });
+
+      console.log("Data sent successfully");
+    } catch (error) {
+      console.error("Error sending data:", error);
+    }
   };
 
   return (
@@ -215,7 +238,7 @@ export default function AdminpageAdmin() {
         </div>
       ))}
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <button className="button3">
+        <button className="button3" onClick={sendDataToServer}>
           <span className="button-content" style={{ fontSize: 19 }}>
             Submit
           </span>

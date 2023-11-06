@@ -16,3 +16,4 @@ s5_id INT REFERENCES s5(id),
 sub_name VARCHAR(60) NOT NULL,
 fac_name VARCHAR(60) NOT NULL
 );
+

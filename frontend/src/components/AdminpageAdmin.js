@@ -106,21 +106,49 @@ export default function AdminpageAdmin() {
   };
   const sendDataToServer = async () => {
     try {
-      const data = [
-        {
-          timeperiod: timeInterval,
-          monday: mondaySubject,
-          tuesday: tuesdaySubject,
-          wednesday: wednesdaySubject,
-          thursday: thursdaySubject,
-          friday: fridaySubject,
-        },
-      ];
-
+      const data = inputFormat.map((item, dayIndex) => {
+        const id = dayIndex + 1; // Unique ID for each day
+        return {
+          id,
+          timeperiod: timeInterval[dayIndex],
+          monday: mondaySubject[dayIndex],
+          tuesday: tuesdaySubject[dayIndex],
+          wednesday: wednesdaySubject[dayIndex],
+          thursday: thursdaySubject[dayIndex],
+          friday: fridaySubject[dayIndex],
+        };
+      });
+      data.push({
+        id: 7,
+        timeperiod: timeInterval[6],
+        monday: mondaySubject[6],
+        tuesday: tuesdaySubject[6],
+        wednesday: wednesdaySubject[6],
+        thursday: thursdaySubject[6],
+        friday: fridaySubject[6],
+      });
+      console.log(data);
       await axios.post("http://localhost:5000/insert-timeperiod", data, {
         headers: { "Content-Type": "application/json" },
       });
 
+      const subAndFacultyData = Array.from({ length: 6 }, (_, subIndex) => {
+        const id = subIndex + 1; // Unique ID for each subject/faculty
+        return {
+          id,
+          subject: subjectNames[subIndex],
+          faculty: facultyNames[subIndex],
+        };
+      });
+
+      await axios.post(
+        "http://localhost:5000/insert-subandfaculty",
+        subAndFacultyData,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      console.log(subAndFacultyData);
       console.log("Data sent successfully");
     } catch (error) {
       console.error("Error sending data:", error);

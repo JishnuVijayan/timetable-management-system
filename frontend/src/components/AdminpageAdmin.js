@@ -87,10 +87,11 @@ export default function AdminpageAdmin() {
     }
   };
   const [subjectNames, setSubjectNames] = useState(
-    Array.from({ length: 6 }, () => "")
+    Array.from({ length: 8 }, () => "")
   );
+
   const [facultyNames, setFacultyNames] = useState(
-    Array.from({ length: 6 }, () => "")
+    Array.from({ length: 8 }, () => "")
   );
 
   const handleSubjectNameChange = (index, value) => {
@@ -132,7 +133,7 @@ export default function AdminpageAdmin() {
         headers: { "Content-Type": "application/json" },
       });
 
-      const subAndFacultyData = Array.from({ length: 6 }, (_, subIndex) => {
+      const subAndFacultyData = Array.from({ length: 8 }, (_, subIndex) => {
         const id = subIndex + 1; // Unique ID for each subject/faculty
         return {
           id,
@@ -230,7 +231,7 @@ export default function AdminpageAdmin() {
         ))}
       </div>
       <h3>Subject name and Faculty name: </h3>
-      {Array.from({ length: 6 }, (_, subIndex) => (
+      {Array.from({ length: 8 }, (_, subIndex) => (
         <div
           style={{
             display: "flex",
@@ -238,11 +239,12 @@ export default function AdminpageAdmin() {
             columnGap: 200,
             justifyContent: "space-evenly",
           }}
+          key={subIndex}
         >
           <div style={{ display: "flex", flexDirection: "row", columnGap: 10 }}>
             <h3>Subject name {subIndex + 1}: </h3>
             <TextField
-              id="standard-basic"
+              id={`subjectName${subIndex + 1}`}
               variant="standard"
               style={{ paddingTop: 8 }}
               value={subjectNames[subIndex]}
@@ -254,7 +256,7 @@ export default function AdminpageAdmin() {
           <div style={{ display: "flex", flexDirection: "row", columnGap: 10 }}>
             <h3>Faculty name: </h3>
             <TextField
-              id="standard-basic"
+              id={`facultyName${subIndex + 1}`}
               variant="standard"
               style={{ paddingTop: 8 }}
               value={facultyNames[subIndex]}

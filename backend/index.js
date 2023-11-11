@@ -53,6 +53,38 @@ app.post("/insert-subandfaculty", async (req, res) => {
   }
 });
 
+
+app.post("/search", async (req, res) => {
+  try {
+    const { semester, facultyName } = req.body;
+
+    const query = `
+      SELECT s5.id, s5.timeperiod, 
+        CASE WHEN s5.monday = subject_faculty.sub_name THEN subject_faculty.sub_name END AS monday,
+        CASE WHEN s5.tuesday = subject_faculty.sub_name THEN subject_faculty.sub_name END AS tuesday,
+        CASE WHEN s5.wednesday = subject_faculty.sub_name THEN subject_faculty.sub_name END AS wednesday,
+        CASE WHEN s5.thursday = subject_faculty.sub_name THEN subject_faculty.sub_name END AS thursday,
+        CASE WHEN s5.friday = subject_faculty.sub_name THEN subject_faculty.sub_name END AS friday
+      FROM s5
+      JOIN subject_faculty ON s5.monday = subject_faculty.sub_name
+                          OR s5.tuesday = subject_faculty.sub_name
+                          OR s5.wednesday = subject_faculty.sub_name
+                          OR s5.thursday = subject_faculty.sub_name
+                          OR s5.friday = subject_faculty.sub_name
+      WHERE subject_faculty.fac_name = $1;
+    `;
+
+    const result = await pool.query(query, [facultyName]);
+
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error("Error searching data:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+
 app.listen(5000, () => {
   console.log("The server has started at PORT 5000");
 });

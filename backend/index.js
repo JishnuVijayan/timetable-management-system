@@ -71,7 +71,7 @@ app.post("/search", async (req, res) => {
                           OR s5.wednesday = subject_faculty.sub_name
                           OR s5.thursday = subject_faculty.sub_name
                           OR s5.friday = subject_faculty.sub_name
-      WHERE subject_faculty.fac_name = $1;
+      WHERE subject_faculty.fac_name = $1 ORDER BY s5.id;
     `;
 
     const result = await pool.query(query, [facultyName]);

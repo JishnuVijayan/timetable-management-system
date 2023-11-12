@@ -3,11 +3,13 @@ import "../styles/UserpageUser.css";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import axios from "axios";
+import { useTable } from "react-table";
 
 export default function UserpageUser() {
   const [semester, setSemester] = useState("");
   const [facultyName, setFacultyName] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+  console.log(searchResult);
   console.log(semester);
   console.log(facultyName);
 
@@ -22,12 +24,47 @@ export default function UserpageUser() {
         }
       );
       setSearchResult(response.data);
-      console.log(response.data);
-      console.log(values);
     } catch (error) {
       console.error(error);
     }
   };
+
+  const data = React.useMemo(() => searchResult, []);
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "ID",
+        accessor: "id",
+      },
+      {
+        Header: "TIME PERIOD",
+        accessor: "timeperiod",
+      },
+      {
+        Header: "MONDAY",
+        accessor: "monday",
+      },
+      {
+        Header: "TUESDAY",
+        accessor: "tuesday",
+      },
+      {
+        Header: "WEDNESDAY",
+        accessor: "wednesday",
+      },
+      {
+        Header: "THURSDAY",
+        accessor: "thursday",
+      },
+      {
+        Header: "FRIDAY",
+        accessor: "friday",
+      },
+    ],
+    []
+  );
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({ columns, data: searchResult });
 
   return (
     <div>
@@ -40,7 +77,12 @@ export default function UserpageUser() {
       >
         <h2>USERS</h2>
       </div>
-      <div style={{ display: "flex", flexDirection: "row" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
         <div className="Headings">
           <h3>Enter the Semester :</h3>
           <h3>Enter the Faculty name :</h3>
@@ -70,9 +112,36 @@ export default function UserpageUser() {
                 Find
               </span>
             </button>
-            <div></div>
           </div>
         </div>
+      </div>
+
+      <div className="container">
+        <table {...getTableBodyProps()}>
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps()}>
+                    {column.render("Header")}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => (
+                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );

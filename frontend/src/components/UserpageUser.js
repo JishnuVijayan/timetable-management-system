@@ -171,41 +171,44 @@ export default function UserpageUser() {
           </div>
         </div>
       </div>
-
-      <div className="container">
-        <table {...getTableBodyProps()}>
-          <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+      {searchResult.length > 0 && (
+        <div className="container">
+          <table {...getTableBodyProps()}>
+            <thead>
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
+                    <th {...column.getHeaderProps()}>
+                      {column.render("Header")}
+                    </th>
                   ))}
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <button class="button3" onClick={exportPDF}>
-          <span class="button-content" style={{ fontSize: 19 }}>
-            DOWNLOAD
-          </span>
-        </button>
-      </div>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map((cell) => (
+                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+      {searchResult.length > 0 && (
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <button class="button3" onClick={exportPDF}>
+            <span class="button-content" style={{ fontSize: 19 }}>
+              DOWNLOAD
+            </span>
+          </button>
+        </div>
+      )}
     </div>
   );
 }

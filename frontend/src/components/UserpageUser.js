@@ -4,6 +4,8 @@ import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import axios from "axios";
 import { useTable } from "react-table";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
 
 export default function UserpageUser() {
   const [semester, setSemester] = useState("");
@@ -27,6 +29,59 @@ export default function UserpageUser() {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const exportPDF = () => {
+    const unit = "pt";
+    const size = "A4";
+    const orientation = "portrait";
+
+    const marginLeft = 40;
+    const doc = new jsPDF(orientation, unit, size);
+
+    doc.setFontSize(15);
+
+    const title = "TimeTable";
+    const headers = [
+      [
+        "ID",
+        "TIME PERIOD",
+        "MONDAY",
+        "TUESDAY",
+        "WEDNESDAY",
+        "THURSDAY",
+        "FRIDAY",
+      ],
+    ];
+
+    const data = searchResult.map((elt) => [
+      elt.id,
+      elt.timeperiod,
+      elt.monday,
+      elt.tuesday,
+      elt.wednesday,
+      elt.thursday,
+      elt.friday,
+    ]);
+
+    let content = {
+      startY: 50,
+      startX: 50,
+      head: headers,
+      body: data,
+      styles: {
+        cellWidth: "wrap",
+        halign: "center",
+      },
+      columnStyles: {
+        0: { halign: "left" },
+        1: { halign: "right" },
+      },
+    };
+
+    doc.text(title, marginLeft, 40);
+    doc.autoTable(content);
+    doc.save("report.pdf");
   };
 
   const data = React.useMemo(() => searchResult, []);
@@ -63,6 +118,7 @@ export default function UserpageUser() {
     ],
     []
   );
+
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data: searchResult });
 
@@ -142,6 +198,13 @@ export default function UserpageUser() {
             })}
           </tbody>
         </table>
+      </div>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <button class="button3" onClick={exportPDF}>
+          <span class="button-content" style={{ fontSize: 19 }}>
+            DOWNLOAD
+          </span>
+        </button>
       </div>
     </div>
   );

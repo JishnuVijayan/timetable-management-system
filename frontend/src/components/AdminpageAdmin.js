@@ -93,187 +93,230 @@ export default function AdminpageAdmin() {
   const [facultyNames, setFacultyNames] = useState(
     Array.from({ length: 8 }, () => "")
   );
+    const [deleteSemester, setDeleteSemester] = useState(" ");
 
-  const handleSubjectNameChange = (index, value) => {
-    const newSubjectNames = [...subjectNames];
-    newSubjectNames[index] = value;
-    setSubjectNames(newSubjectNames);
-  };
+    const handleSubjectNameChange = (index, value) => {
+      const newSubjectNames = [...subjectNames];
+      newSubjectNames[index] = value;
+      setSubjectNames(newSubjectNames);
+    };
 
-  const handleFacultyNameChange = (index, value) => {
-    const newFacultyNames = [...facultyNames];
-    newFacultyNames[index] = value;
-    setFacultyNames(newFacultyNames);
-  };
-  const sendDataToServer = async () => {
-    try {
-      const data = inputFormat.map((item, dayIndex) => {
-        const id = dayIndex + 1; // Unique ID for each day
-        return {
-          id,
-          timeperiod: timeInterval[dayIndex],
-          monday: mondaySubject[dayIndex],
-          tuesday: tuesdaySubject[dayIndex],
-          wednesday: wednesdaySubject[dayIndex],
-          thursday: thursdaySubject[dayIndex],
-          friday: fridaySubject[dayIndex],
-        };
-      });
-      data.push({
-        id: 7,
-        timeperiod: timeInterval[6],
-        monday: mondaySubject[6],
-        tuesday: tuesdaySubject[6],
-        wednesday: wednesdaySubject[6],
-        thursday: thursdaySubject[6],
-        friday: fridaySubject[6],
-      });
-      console.log(data);
-      await axios.post("http://localhost:5000/insert-timeperiod", data, {
-        headers: { "Content-Type": "application/json" },
-      });
+    const handleFacultyNameChange = (index, value) => {
+      const newFacultyNames = [...facultyNames];
+      newFacultyNames[index] = value;
+      setFacultyNames(newFacultyNames);
+    };
 
-      const subAndFacultyData = Array.from({ length: 8 }, (_, subIndex) => {
-        const id = subIndex + 1; // Unique ID for each subject/faculty
-        return {
-          id,
-          subject: subjectNames[subIndex],
-          faculty: facultyNames[subIndex],
-        };
-      });
-
-      await axios.post(
-        "http://localhost:5000/insert-subandfaculty",
-        subAndFacultyData,
-        {
+    const sendDataToServer = async () => {
+      try {
+        const data = inputFormat.map((item, dayIndex) => {
+          return {
+            timeperiod: timeInterval[dayIndex],
+            monday: mondaySubject[dayIndex],
+            tuesday: tuesdaySubject[dayIndex],
+            wednesday: wednesdaySubject[dayIndex],
+            thursday: thursdaySubject[dayIndex],
+            friday: fridaySubject[dayIndex],
+          };
+        });
+        data.push({
+          id: 7,
+          timeperiod: timeInterval[6],
+          monday: mondaySubject[6],
+          tuesday: tuesdaySubject[6],
+          wednesday: wednesdaySubject[6],
+          thursday: thursdaySubject[6],
+          friday: fridaySubject[6],
+        });
+        console.log(data);
+        await axios.post("http://localhost:5000/insert-timeperiod", data, {
           headers: { "Content-Type": "application/json" },
-        }
-      );
-      console.log(subAndFacultyData);
-      console.log("Data sent successfully");
-    } catch (error) {
-      console.error("Error sending data:", error);
-    }
-  };
+        });
 
-  return (
-    <div>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <h1>Admin</h1>
-      </div>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            columnGap: 20,
-          }}
-        >
-          <h3>Enter the semester:</h3>
-          <TextField
-            id="standard-basic"
-            variant="standard"
-            style={{ paddingTop: 8 }}
-            value={semester}
-            onChange={(e) => setSemesterName(e.target.value)}
-          />
+        const subAndFacultyData = Array.from({ length: 8 }, (_, subIndex) => {
+          const id = subIndex + 1; // Unique ID for each subject/faculty
+          return {
+            id,
+            subject: subjectNames[subIndex],
+            faculty: facultyNames[subIndex],
+          };
+        });
+
+        await axios.post(
+          "http://localhost:5000/insert-subandfaculty",
+          subAndFacultyData,
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        console.log(subAndFacultyData);
+        console.log("Data sent successfully");
+      } catch (error) {
+        console.error("Error sending data:", error);
+      }
+    };
+
+    const handleDelete = async () => {
+      try {
+        const deletedata = { semester: deleteSemester };
+        await axios.delete("http://localhost:5000/deletetable", {
+          data: deletedata,
+
+          headers: { "Content-Type": "application/json" },
+        });
+        console.log("SUCCESSFULLY DELETED");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    return (
+      <div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <h1>Admin</h1>
         </div>
-        {inputFormat.map((item, dayIndex) => (
-          <div key={item.id}>
-            <h3>{item.title}:</h3>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              columnGap: 20,
+            }}
+          >
+            <h3>Enter the semester:</h3>
+            <TextField
+              id="standard-basic"
+              variant="standard"
+              style={{ paddingTop: 8 }}
+              value={semester}
+              onChange={(e) => setSemesterName(e.target.value)}
+            />
+          </div>
+          {inputFormat.map((item, dayIndex) => (
+            <div key={item.id}>
+              <h3>{item.title}:</h3>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  columnGap: 10,
+                  justifyContent: "space-between",
+                  paddingLeft: 25,
+                  paddingRight: 25,
+                }}
+              >
+                {Array(7)
+                  .fill()
+                  .map((_, index) => (
+                    <div
+                      key={index}
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        columnGap: 10,
+                      }}
+                    >
+                      <h3>{index + 1}:</h3>
+                      <TextField
+                        id="standard-basic"
+                        variant="standard"
+                        style={{ width: 60, paddingTop: 8 }}
+                        value={
+                          item.title === "For monday"
+                            ? mondaySubject[index]
+                            : item.title === "For tuesday"
+                            ? tuesdaySubject[index]
+                            : item.title === "For wednesday"
+                            ? wednesdaySubject[index]
+                            : item.title === "For thursday"
+                            ? thursdaySubject[index]
+                            : item.title === "For friday"
+                            ? fridaySubject[index]
+                            : timeInterval[index]
+                        }
+                        onChange={(e) =>
+                          handleInputChange(item.title, index, e.target.value)
+                        }
+                      />
+                    </div>
+                  ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <h3>Subject name and Faculty name: </h3>
+        {Array.from({ length: 8 }, (_, subIndex) => (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              columnGap: 200,
+              justifyContent: "space-evenly",
+            }}
+            key={subIndex}
+          >
             <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                columnGap: 10,
-                justifyContent: "space-between",
-                paddingLeft: 25,
-                paddingRight: 25,
-              }}
+              style={{ display: "flex", flexDirection: "row", columnGap: 10 }}
             >
-              {Array(7)
-                .fill()
-                .map((_, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      columnGap: 10,
-                    }}
-                  >
-                    <h3>{index + 1}:</h3>
-                    <TextField
-                      id="standard-basic"
-                      variant="standard"
-                      style={{ width: 60, paddingTop: 8 }}
-                      value={
-                        item.title === "For monday"
-                          ? mondaySubject[index]
-                          : item.title === "For tuesday"
-                          ? tuesdaySubject[index]
-                          : item.title === "For wednesday"
-                          ? wednesdaySubject[index]
-                          : item.title === "For thursday"
-                          ? thursdaySubject[index]
-                          : item.title === "For friday"
-                          ? fridaySubject[index]
-                          : timeInterval[index]
-                      }
-                      onChange={(e) =>
-                        handleInputChange(item.title, index, e.target.value)
-                      }
-                    />
-                  </div>
-                ))}
+              <h3>Subject name {subIndex + 1}: </h3>
+              <TextField
+                id={`subjectName${subIndex + 1}`}
+                variant="standard"
+                style={{ paddingTop: 8 }}
+                value={subjectNames[subIndex]}
+                onChange={(e) =>
+                  handleSubjectNameChange(subIndex, e.target.value)
+                }
+              />
+            </div>
+            <div
+              style={{ display: "flex", flexDirection: "row", columnGap: 10 }}
+            >
+              <h3>Faculty name: </h3>
+              <TextField
+                id={`facultyName${subIndex + 1}`}
+                variant="standard"
+                style={{ paddingTop: 8 }}
+                value={facultyNames[subIndex]}
+                onChange={(e) =>
+                  handleFacultyNameChange(subIndex, e.target.value)
+                }
+              />
             </div>
           </div>
         ))}
-      </div>
-      <h3>Subject name and Faculty name: </h3>
-      {Array.from({ length: 8 }, (_, subIndex) => (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            columnGap: 200,
-            justifyContent: "space-evenly",
-          }}
-          key={subIndex}
-        >
-          <div style={{ display: "flex", flexDirection: "row", columnGap: 10 }}>
-            <h3>Subject name {subIndex + 1}: </h3>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <button className="button3" onClick={sendDataToServer}>
+            <span className="button-content" style={{ fontSize: 19 }}>
+              Submit
+            </span>
+          </button>
+        </div>
+        <h2>TO DELETE:</h2>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              columnGap: 20,
+            }}
+          >
+            <h3>Enter the semester:</h3>
             <TextField
-              id={`subjectName${subIndex + 1}`}
+              id="standard-basic"
               variant="standard"
               style={{ paddingTop: 8 }}
-              value={subjectNames[subIndex]}
-              onChange={(e) =>
-                handleSubjectNameChange(subIndex, e.target.value)
-              }
+              onChange={(e) => setDeleteSemester(e.target.value)}
             />
           </div>
-          <div style={{ display: "flex", flexDirection: "row", columnGap: 10 }}>
-            <h3>Faculty name: </h3>
-            <TextField
-              id={`facultyName${subIndex + 1}`}
-              variant="standard"
-              style={{ paddingTop: 8 }}
-              value={facultyNames[subIndex]}
-              onChange={(e) =>
-                handleFacultyNameChange(subIndex, e.target.value)
-              }
-            />
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <button className="button3" onClick={handleDelete}>
+              <span className="button-content" style={{ fontSize: 19 }}>
+                Delete
+              </span>
+            </button>
           </div>
         </div>
-      ))}
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <button className="button3" onClick={sendDataToServer}>
-          <span className="button-content" style={{ fontSize: 19 }}>
-            Submit
-          </span>
-        </button>
       </div>
-    </div>
-  );
+    );
 }

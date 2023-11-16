@@ -137,6 +137,7 @@ export default function UserpageUser() {
         style={{
           display: "flex",
           flexDirection: "row",
+          justifyContent: "center",
         }}
       >
         <div className="Headings">

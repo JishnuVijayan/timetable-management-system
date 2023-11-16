@@ -1,6 +1,6 @@
 CREATE DATABASE timetablemanagement;
 
-CREATE TABLE s5(
+CREATE TABLE S5(
 id SERIAL PRIMARY KEY,
 timeperiod VARCHAR(255) NOT NULL,
 monday  VARCHAR(60),
@@ -12,7 +12,7 @@ friday VARCHAR(60)
 
 
 
-CREATE TABLE subject_faculty(
+CREATE TABLE S5_sub_fac(
 s_id SERIAL PRIMARY KEY,
 sub_name VARCHAR(60) NOT NULL,
 fac_name VARCHAR(60) NOT NULL

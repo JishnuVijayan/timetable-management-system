@@ -11,6 +11,7 @@ export default function UserpageUser() {
   const [semester, setSemester] = useState("");
   const [facultyName, setFacultyName] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+
   console.log(searchResult);
   console.log(semester);
   console.log(facultyName);

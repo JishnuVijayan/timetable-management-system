@@ -109,6 +109,7 @@ export default function AdminpageAdmin() {
 
     const sendDataToServer = async () => {
       try {
+        const lowerCaseSemesterName = semester.toLowerCase();
         const data = inputFormat.map((item, dayIndex) => {
           return {
             timeperiod: timeInterval[dayIndex],
@@ -120,7 +121,6 @@ export default function AdminpageAdmin() {
           };
         });
         data.push({
-          id: 7,
           timeperiod: timeInterval[6],
           monday: mondaySubject[6],
           tuesday: tuesdaySubject[6],
@@ -129,22 +129,26 @@ export default function AdminpageAdmin() {
           friday: fridaySubject[6],
         });
         console.log(data);
-        await axios.post("http://localhost:5000/insert-timeperiod", data, {
-          headers: { "Content-Type": "application/json" },
-        });
+        await axios.post(
+          "http://localhost:5000/insert-timeperiod",
+          { semester: lowerCaseSemesterName, data },
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
 
         const subAndFacultyData = Array.from({ length: 8 }, (_, subIndex) => {
-          const id = subIndex + 1; // Unique ID for each subject/faculty
+          const id = subIndex + 1;
           return {
             id,
             subject: subjectNames[subIndex],
             faculty: facultyNames[subIndex],
           };
         });
-
+        console.log(subAndFacultyData);
         await axios.post(
           "http://localhost:5000/insert-subandfaculty",
-          subAndFacultyData,
+          { subAndFacultyData, semester: lowerCaseSemesterName },
           {
             headers: { "Content-Type": "application/json" },
           }

@@ -56,27 +56,48 @@ app.post("/insert-subandfaculty", async (req, res) => {
   }
 });
 
+
 app.post("/search", async (req, res) => {
   try {
-    const { semester, facultyName } = req.body;
+    const { semesters, facultyName } = req.body;
 
-    const query = `
-    SELECT ${semester}_cse.id, ${semester}_cse.timeperiod, 
-      CASE WHEN ${semester}_cse.monday = ${semester}_cse_sub_fac.sub_name THEN ${semester}_cse_sub_fac.sub_name END AS monday,
-      CASE WHEN ${semester}_cse.tuesday = ${semester}_cse_sub_fac.sub_name THEN ${semester}_cse_sub_fac.sub_name END AS tuesday,
-      CASE WHEN ${semester}_cse.wednesday = ${semester}_cse_sub_fac.sub_name THEN ${semester}_cse_sub_fac.sub_name END AS wednesday,
-      CASE WHEN ${semester}_cse.thursday = ${semester}_cse_sub_fac.sub_name THEN ${semester}_cse_sub_fac.sub_name END AS thursday,
-      CASE WHEN ${semester}_cse.friday = ${semester}_cse_sub_fac.sub_name THEN ${semester}_cse_sub_fac.sub_name END AS friday
-    FROM ${semester}_cse
-    JOIN ${semester}_cse_sub_fac ON ${semester}_cse.monday = ${semester}_cse_sub_fac.sub_name
-                        OR ${semester}_cse.tuesday = ${semester}_cse_sub_fac.sub_name
-                        OR ${semester}_cse.wednesday = ${semester}_cse_sub_fac.sub_name
-                        OR ${semester}_cse.thursday = ${semester}_cse_sub_fac.sub_name
-                        OR ${semester}_cse.friday = ${semester}_cse_sub_fac.sub_name
-    WHERE ${semester}_cse_sub_fac.fac_name = $1 ORDER BY ${semester}_cse.id;
+    const semesterTables = semesters
+      .map(
+        (semester) => `
+      SELECT '${semester}' AS semester,
+             ${semester}_cse.id,
+             ${semester}_cse.timeperiod,
+             CASE WHEN ${semester}_cse.monday = ${semester}_cse_sub_fac.sub_name THEN ${semester}_cse_sub_fac.sub_name END AS monday,
+             CASE WHEN ${semester}_cse.tuesday = ${semester}_cse_sub_fac.sub_name THEN ${semester}_cse_sub_fac.sub_name END AS tuesday,
+             CASE WHEN ${semester}_cse.wednesday = ${semester}_cse_sub_fac.sub_name THEN ${semester}_cse_sub_fac.sub_name END AS wednesday,
+             CASE WHEN ${semester}_cse.thursday = ${semester}_cse_sub_fac.sub_name THEN ${semester}_cse_sub_fac.sub_name END AS thursday,
+             CASE WHEN ${semester}_cse.friday = ${semester}_cse_sub_fac.sub_name THEN ${semester}_cse_sub_fac.sub_name END AS friday
+      FROM ${semester}_cse
+      JOIN ${semester}_cse_sub_fac ON ${semester}_cse.monday = ${semester}_cse_sub_fac.sub_name
+                              OR ${semester}_cse.tuesday = ${semester}_cse_sub_fac.sub_name
+                              OR ${semester}_cse.wednesday = ${semester}_cse_sub_fac.sub_name
+                              OR ${semester}_cse.thursday = ${semester}_cse_sub_fac.sub_name
+                              OR ${semester}_cse.friday = ${semester}_cse_sub_fac.sub_name
+      WHERE ${semester}_cse_sub_fac.fac_name = $1
+    `
+      )
+      .join(" UNION ALL ");
+
+    const finalQuery = `
+    SELECT DISTINCT ON (result.id)
+      result.id,
+      result.timeperiod,
+      STRING_AGG(result.monday, '') AS monday,
+      STRING_AGG(result.tuesday, '') AS tuesday,
+      STRING_AGG(result.wednesday, '') AS wednesday,
+      STRING_AGG(result.thursday, '') AS thursday,
+      STRING_AGG(result.friday, '') AS friday
+    FROM (${semesterTables}) AS result
+    GROUP BY result.id, result.timeperiod
+    ORDER BY result.id, result.timeperiod;
   `;
 
-    const result = await pool.query(query, [facultyName]);
+    const result = await pool.query(finalQuery, [facultyName]);
 
     res.status(200).json(result.rows);
   } catch (error) {

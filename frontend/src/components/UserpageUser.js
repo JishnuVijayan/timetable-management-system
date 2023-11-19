@@ -18,7 +18,8 @@ export default function UserpageUser() {
 
   const handleSearch = async () => {
     try {
-      const values = { semester, facultyName };
+      // const values = { semester, facultyName };
+      const values = { semesters: semester.split(","), facultyName };
       const response = await axios.post(
         "http://localhost:5000/search",
         values,
